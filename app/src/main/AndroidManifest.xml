@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.organezized.lister.DisplayListActivity"
+            android:label="List View"
+            android:parentActivityName="com.organezized.lister.MainListActivity" >
+        </activity>
     </application>
 
 </manifest>

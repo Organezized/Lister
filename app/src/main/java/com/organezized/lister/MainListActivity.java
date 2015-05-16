@@ -60,19 +60,18 @@ public class MainListActivity extends ActionBarActivity {
         loadedItems.add(listName);
 
         // Make a reference to the Lists.
-        ListView lists = (ListView)findViewById(R.id.lists);
+        ListView lists = (ListView) findViewById(R.id.lists);
 
         // Create an array adapter (for some reason) ?? Not sure why yet.
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_list_item, loadedItems);
         lists.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
 
-
-        //Intent intent = new Intent(this, DisplayListActivity.class);
-
-
-        //intent.putExtra("LIST_NAME", listName);
-
-       // startActivity(intent);
+    public void editList(View view) {
+        String listName = "Replace this with list name";
+        Intent intent = new Intent(this, DisplayListActivity.class);
+        intent.putExtra("LIST_NAME", listName);
+        startActivity(intent);
     }
 }

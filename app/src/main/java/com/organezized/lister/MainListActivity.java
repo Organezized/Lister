@@ -66,7 +66,7 @@ public class MainListActivity extends ActionBarActivity {
         ListView lists = (ListView)findViewById(R.id.lists);
 
         // Create an array adapter (for some reason) ?? Not sure why yet.
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_list_item, loadedItems);
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_list_item,R.id.label, loadedItems);
         lists.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

@@ -70,4 +70,10 @@ public class DisplayListActivity extends ActionBarActivity {
             return rootView;
         }
     }
+
+    /**
+     * Method for adding a Text Editing box
+     * for new items to be added to a particular list
+     */
+    public static class
 }

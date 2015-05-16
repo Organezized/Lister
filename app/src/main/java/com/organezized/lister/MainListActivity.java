@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -66,13 +67,15 @@ public class MainListActivity extends ActionBarActivity {
         ListView lists = (ListView) findViewById(R.id.lists);
 
         // Create an array adapter (for some reason) ?? Not sure why yet.
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_list_item,R.id.label, loadedItems);
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_list_item,R.id.listName, loadedItems);
         lists.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
     public void editList(View view) {
-        String listName = "Replace this with list name";
+        TextView textView = (TextView) findViewById(R.id.listName);
+
+        String listName = textView.getText().toString();
         Intent intent = new Intent(this, DisplayListActivity.class);
         intent.putExtra("LIST_NAME", listName);
         startActivity(intent);

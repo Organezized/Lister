@@ -11,14 +11,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
 * Created by Damon on 9/05/15.
 */
 
 public class DisplayListActivity extends ActionBarActivity {
+
+    ArrayList<String> listItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,25 @@ public class DisplayListActivity extends ActionBarActivity {
                     container, false);
             return rootView;
         }
+    }
+
+    public void addListItemName(View view) {
+
+        EditText listItemNameField = (EditText) findViewById(R.id.listItemName);
+        String listItemName = listItemNameField.getText().toString();
+
+        // Add the list items to array
+        listItems.add(listItemName);
+
+        // Create instance of (listItems xml view)
+        ListView listItemsView = (ListView) findViewById(R.id.listItems);
+
+        // set the adapter using the instance above
+        ArrayAdapter adapters = new ArrayAdapter<String>(this, R.layout.list_item,R.id.listItemName, listItems);
+        listItemsView.setAdapter(adapters);
+        adapters.notifyDataSetChanged();
+
+        Log.d("TAG", adapters.toString());
     }
 
 }

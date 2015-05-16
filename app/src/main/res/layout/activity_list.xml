@@ -23,7 +23,7 @@
 
         <EditText
             android:layout_height="wrap_content"
-            android:id="@+id/editListItem"
+            android:id="@+id/listItemName"
             android:hint="Add item to list"
             android:layout_weight="1"
             android:layout_width="0dp"/>
@@ -32,13 +32,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Submit"
-            android:onClick="addListItem" />
+            android:onClick="addListItemName" />
 
     </LinearLayout>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listItems"></ListView>
+        android:id="@+id/listItems">
+
+    </ListView>
 
 </LinearLayout>

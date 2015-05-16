@@ -5,6 +5,7 @@ import android.renderscript.ScriptIntrinsicLUT;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.util.Log;
@@ -30,8 +31,10 @@ public class MainListActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar, menu);
         getMenuInflater().inflate(R.menu.menu_main_list, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

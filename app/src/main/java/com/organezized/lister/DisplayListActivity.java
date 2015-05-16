@@ -23,8 +23,11 @@ public class DisplayListActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_list);
+        // setContentView(R.layout.activity_displaymessage);
         Intent intent = getIntent();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         String listName = intent.getStringExtra("LIST_NAME");
         TextView textView = new TextView(this);
         textView.setTextSize(50);

@@ -23,17 +23,20 @@ public class DisplayListActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setContentView(R.layout.activity_displaymessage);
-        Intent intent = getIntent();
-
+        setContentView(R.layout.activity_list);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Intent intent = getIntent();
         String listName = intent.getStringExtra("LIST_NAME");
-        TextView textView = new TextView(this);
-        textView.setTextSize(50);
-        textView.setText(listName);
 
-        setContentView(textView);
+        TextView listNameField = (TextView) findViewById(R.id.listName);
+        listNameField.setText(listName);
+
+        //TextView textView = new TextView(this);
+        //textView.setTextSize(50);
+        //textView.setText(listName);
+
+        //setContentView(textView);
 
         /*
         if (savedInstanceState == null) {
@@ -71,9 +74,4 @@ public class DisplayListActivity extends ActionBarActivity {
         }
     }
 
-    /**
-     * Method for adding a Text Editing box
-     * for new items to be added to a particular list
-     */
-    public static class
 }

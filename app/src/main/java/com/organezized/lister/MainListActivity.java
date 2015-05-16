@@ -1,24 +1,31 @@
 package com.organezized.lister;
 
 import android.content.Intent;
+import android.renderscript.ScriptIntrinsicLUT;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class MainListActivity extends ActionBarActivity {
     //public final static String EXTRA_MESSAGE = "Message";
+
+    ArrayList<String> loadedItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_list);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -42,15 +49,30 @@ public class MainListActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void addItem(View view) {
-       Log.i("content","hello list");
-       Intent intent = new Intent(this, DisplayListActivity.class);
-       EditText editText = (EditText) findViewById(R.id.editText);
-       String listName = editText.getText().toString();
-       intent.putExtra("LIST_NAME", listName);
-       startActivity(intent);
+
+    public void newList(View view) {
+
+        // First, grab the name of the new list from the view.
+        EditText editText = (EditText) findViewById(R.id.editText);
+        String listName = editText.getText().toString();
+
+        // Add the new List.
+        loadedItems.add(listName);
+
+        // Make a reference to the Lists.
+        ListView lists = (ListView)findViewById(R.id.lists);
+
+        // Create an array adapter (for some reason) ?? Not sure why yet.
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_list_item, loadedItems);
+        lists.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+
+        //Intent intent = new Intent(this, DisplayListActivity.class);
+
+
+        //intent.putExtra("LIST_NAME", listName);
+
+       // startActivity(intent);
     }
-
-
-
 }

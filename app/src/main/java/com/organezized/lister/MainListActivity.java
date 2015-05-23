@@ -1,5 +1,6 @@
 package com.organezized.lister;
 
+import android.content.Context;
 import android.content.Intent;
 import android.renderscript.ScriptIntrinsicLUT;
 import android.support.v7.app.ActionBarActivity;
@@ -14,6 +15,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -27,6 +35,13 @@ public class MainListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_list);
+
+        loadItems();
+        refreshList();
+        System.out.println("items start");
+        for (String item : loadedItems) {
+            System.out.println("Loaded items: " + item);
+        }
     }
 
     @Override
@@ -63,6 +78,7 @@ public class MainListActivity extends ActionBarActivity {
         // Add the new List.
         loadedItems.add(listName);
 
+
         // Make a reference to the Lists.
         ListView lists = (ListView) findViewById(R.id.lists);
 
@@ -70,7 +86,11 @@ public class MainListActivity extends ActionBarActivity {
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_list_item,R.id.listName, loadedItems);
         lists.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        // Save the list names to file
+        saveItems();
     }
+
 
     public void editList(View view) {
         TextView textView = (TextView) findViewById(R.id.listName);
@@ -80,4 +100,66 @@ public class MainListActivity extends ActionBarActivity {
         intent.putExtra("LIST_NAME", listName);
         startActivity(intent);
     }
+
+
+    public void refreshList() {
+        // set the adapter using the instance above and refresh activity contents
+        ListView listItemsView = (ListView) findViewById(R.id.lists);
+        ArrayAdapter adapters = new ArrayAdapter<String>(this, R.layout.activity_list_item,R.id.listName, loadedItems);
+        listItemsView.setAdapter(adapters);
+        adapters.notifyDataSetChanged();
+    }
+
+
+    // creating the file for the list
+    public void saveItems() {
+
+        String FILE_NAME = "list_names";
+        // make reference to the list contents here:
+        // String list = "List contents are here\n Hello";
+
+        try {
+
+            FileOutputStream fos = openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+
+            try {
+                for (String item : loadedItems) {
+                    System.out.println("Items: " + item);
+                    fos.write(item.getBytes());
+                    fos.write("\n".getBytes());
+
+                }
+                fos.close();
+            }
+            catch (IOException e) {
+                System.out.println("Could not write to file");
+            }
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Could not open file");
+
+        }
+    }
+
+    public void loadItems() {
+        try {
+            FileInputStream fis = openFileInput("list_names");
+            InputStreamReader inputStream = new InputStreamReader(fis);
+            BufferedReader buffer = new BufferedReader(inputStream);
+
+
+            String line;
+
+            while ((line = buffer.readLine()) != null) {
+                loadedItems.add(line);
+
+                System.out.println(line);
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Could not find file");
+        }
+
+    }
+
 }

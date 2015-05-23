@@ -81,22 +81,35 @@ public class DisplayListActivity extends ActionBarActivity {
     }
 
     public void addListItemName(View view) {
-
+        // create an EditText field using xml reference
+        // and save to variable listItemName
         EditText listItemNameField = (EditText) findViewById(R.id.listItemName);
         String listItemName = listItemNameField.getText().toString();
 
         // Add the list items to array
         listItems.add(listItemName);
 
-        // Create instance of (listItems xml view)
-        ListView listItemsView = (ListView) findViewById(R.id.listItems);
+        refreshList();
+    }
 
-        // set the adapter using the instance above
+
+    public void deleteListItem(View view) {
+
+        ListView listItemsView = (ListView) findViewById(R.id.listItems);
+        int indexNo = listItemsView.getPositionForView(view);
+
+        listItems.remove(indexNo);
+
+        refreshList();
+    }
+
+
+    public void refreshList() {
+        // set the adapter using the instance above and refresh activity contents
+        ListView listItemsView = (ListView) findViewById(R.id.listItems);
         ArrayAdapter adapters = new ArrayAdapter<String>(this, R.layout.list_item,R.id.listItemName, listItems);
         listItemsView.setAdapter(adapters);
         adapters.notifyDataSetChanged();
-
-        Log.d("TAG", adapters.toString());
     }
 
 }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,13 +25,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.ArrayList;
-
-
+/**
+ * Class for main page: create list main page
+ */
 public class MainListActivity extends ActionBarActivity {
-    //public final static String EXTRA_MESSAGE = "Message";
 
     ArrayList<String> loadedItems = new ArrayList<>();
 
+
+    // load list items and populate list name page
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +41,10 @@ public class MainListActivity extends ActionBarActivity {
 
         loadItems();
         refreshList();
-        System.out.println("items start");
-        for (String item : loadedItems) {
-            System.out.println("Loaded items: " + item);
-        }
     }
 
+
+    // Adds items to action bar.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -53,6 +54,8 @@ public class MainListActivity extends ActionBarActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
+    // Handles Action bar items
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -69,6 +72,7 @@ public class MainListActivity extends ActionBarActivity {
     }
 
 
+    // Method creates a new item on the list (list name : edit)
     public void newList(View view) {
 
         // First, grab the name of the new list from the view.
@@ -77,7 +81,6 @@ public class MainListActivity extends ActionBarActivity {
 
         // Add the new List.
         loadedItems.add(listName);
-
 
         // Make a reference to the Lists.
         ListView lists = (ListView) findViewById(R.id.lists);
@@ -92,16 +95,22 @@ public class MainListActivity extends ActionBarActivity {
     }
 
 
+    // On click handler(when edit is clicked)
+    // pass list name to the page of where you edit the list
     public void editList(View view) {
-        TextView textView = (TextView) findViewById(R.id.listName);
+        // get parent of button
+        LinearLayout buttonParent = (LinearLayout) view.getParent();
+        TextView textView =  (TextView) buttonParent.getChildAt(0);
 
         String listName = textView.getText().toString();
+
         Intent intent = new Intent(this, DisplayListActivity.class);
         intent.putExtra("LIST_NAME", listName);
         startActivity(intent);
     }
 
 
+    // refresh list after making changes
     public void refreshList() {
         // set the adapter using the instance above and refresh activity contents
         ListView listItemsView = (ListView) findViewById(R.id.lists);
@@ -124,7 +133,6 @@ public class MainListActivity extends ActionBarActivity {
 
             try {
                 for (String item : loadedItems) {
-                    System.out.println("Items: " + item);
                     fos.write(item.getBytes());
                     fos.write("\n".getBytes());
 
@@ -141,25 +149,37 @@ public class MainListActivity extends ActionBarActivity {
         }
     }
 
+
+    // loading saved items
     public void loadItems() {
         try {
             FileInputStream fis = openFileInput("list_names");
             InputStreamReader inputStream = new InputStreamReader(fis);
             BufferedReader buffer = new BufferedReader(inputStream);
 
-
             String line;
 
             while ((line = buffer.readLine()) != null) {
                 loadedItems.add(line);
-
-                System.out.println(line);
             }
         }
         catch (Exception e) {
             System.out.println("Could not find file");
         }
-
     }
 
-}
+
+    // delete button for list names
+    public void delete(View v) {
+
+        System.out.println("delete button clicked");
+
+        ListView listNames = (ListView) findViewById(R.id.lists);
+        int indexNo = listNames.getPositionForView(v);
+
+        loadedItems.remove(indexNo);
+
+        refreshList();
+    }
+
+}  // end of class

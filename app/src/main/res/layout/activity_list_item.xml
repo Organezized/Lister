@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  Single List Item Design -->
+<!--  The list item page layout -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal">
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/listName"
+        android:id="@id/listName"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:padding="10dip"
@@ -18,6 +18,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit"
-        android:onClick="editList" />
+        android:onClick="editList"
+    />
+
+    <Button
+        android:id="@+id/delete_btn"
+        android:layout_width="60dip"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/delete_32"
+        android:onClick="delete"
+    />
 
 </LinearLayout>

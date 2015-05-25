@@ -20,11 +20,13 @@ import java.util.ArrayList;
 
 /**
 * Created by Damon on 9/05/15.
+* Class for displaying list contents and making / editing lists
 */
 
 public class DisplayListActivity extends ActionBarActivity {
 
     ArrayList<String> listItems = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,7 @@ public class DisplayListActivity extends ActionBarActivity {
             return rootView;
         }
     }
+
 
     public void addListItemName(View view) {
         // create an EditText field using xml reference

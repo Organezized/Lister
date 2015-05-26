@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+android:orientation="horizontal" android:layout_width="fill_parent"
+android:layout_height="fill_parent">
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/listItemName"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:padding="10dip"
-        android:textSize="16dip"
-        android:textStyle="bold"
-        android:text="Please create your list.">
-    </TextView>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listItemName"
+    android:layout_width="200dip"
+    android:layout_height="fill_parent"
+    android:padding="10dip"
+    android:textSize="16dip"
+    android:textStyle="bold">
+</TextView>
 
-    <Button android:id="@+id/button_send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete"
-        android:onClick="deleteListItem" />
+<Button android:id="@+id/button_send"
+    android:layout_width="55dip"
+    android:layout_height="wrap_content"
+    android:drawableLeft="@drawable/delete_32"
+    android:onClick="deleteListItem" />
 
 </LinearLayout>

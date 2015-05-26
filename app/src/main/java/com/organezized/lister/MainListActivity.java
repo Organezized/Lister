@@ -30,6 +30,7 @@ import java.util.ArrayList;
  */
 public class MainListActivity extends ActionBarActivity {
 
+    // Array stores the items after loading from: loadItems()
     ArrayList<String> loadedItems = new ArrayList<>();
 
 
@@ -171,8 +172,6 @@ public class MainListActivity extends ActionBarActivity {
 
     // delete button for list names
     public void delete(View v) {
-
-        System.out.println("delete button clicked");
 
         ListView listNames = (ListView) findViewById(R.id.lists);
         int indexNo = listNames.getPositionForView(v);

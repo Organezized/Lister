@@ -1,6 +1,7 @@
 package com.organezized.lister;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -16,21 +17,34 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
-* Created by Damon on 9/05/15.
-* Class for displaying list contents and making / editing lists
+ * Created by Damon on 9/05/15.
+ * Class for displaying the 2/2 page for our app: the list name
+ * at top and then the list contents below.
+ * Note: List contents are stored as seperate listView items.
 */
 
 public class DisplayListActivity extends ActionBarActivity {
 
+    // Stores the list names
     ArrayList<String> listItems = new ArrayList<>();
 
+    ArrayList<String> listContents = new ArrayList<>();
 
+
+    // Creates the view that is seen when passed to the new window
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_list);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -40,25 +54,17 @@ public class DisplayListActivity extends ActionBarActivity {
         TextView listNameField = (TextView) findViewById(R.id.listName);
         listNameField.setText(listName);
 
-        //TextView textView = new TextView(this);
-        //textView.setTextSize(50);
-        //textView.setText(listName);
-
-        //setContentView(textView);
-
-        /*
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment()).commit();
+        loadItems();
+        for (String item: listItems) {
+            System.out.println(item);
         }
-        */
+        refreshList();
     }
 
+
+    // Action bar stuff...
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
@@ -66,9 +72,9 @@ public class DisplayListActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
+
+    // Don't know what this does?
+    // A placeholder fragment containing a simple view.
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() { }
@@ -83,6 +89,8 @@ public class DisplayListActivity extends ActionBarActivity {
     }
 
 
+    // This method adds items to the actual list.
+    // This is the list contents.
     public void addListItemName(View view) {
         // create an EditText field using xml reference
         // and save to variable listItemName
@@ -92,6 +100,13 @@ public class DisplayListActivity extends ActionBarActivity {
         // Add the list items to array
         listItems.add(listItemName);
 
+        System.out.println("List item method");
+        for (String item: listItems) {
+
+            System.out.println(item);
+        }
+
+        saveItems();
         refreshList();
     }
 
@@ -107,12 +122,60 @@ public class DisplayListActivity extends ActionBarActivity {
     }
 
 
+    // Refresh list after changes are made
     public void refreshList() {
         // set the adapter using the instance above and refresh activity contents
         ListView listItemsView = (ListView) findViewById(R.id.listItems);
         ArrayAdapter adapters = new ArrayAdapter<String>(this, R.layout.list_item,R.id.listItemName, listItems);
         listItemsView.setAdapter(adapters);
         adapters.notifyDataSetChanged();
+    }
+
+
+    // creating the file for the list
+    public void saveItems() {
+
+        String FILE_NAME = "list_content";
+
+        try {
+
+            FileOutputStream fos = openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+
+            try {
+                for (String item : listItems) {
+                    fos.write(item.getBytes());
+                    fos.write("\n".getBytes());
+
+                }
+                fos.close();
+            }
+            catch (IOException e) {
+                System.out.println("Could not write to file");
+            }
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Could not open file");
+
+        }
+    }
+
+
+    // loading saved items
+    public void loadItems() {
+        try {
+            FileInputStream fis = openFileInput("list_names");
+            InputStreamReader inputStream = new InputStreamReader(fis);
+            BufferedReader buffer = new BufferedReader(inputStream);
+
+            String line;
+
+            while ((line = buffer.readLine()) != null) {
+                listItems.add(line);
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Could not find file");
+        }
     }
 
 }

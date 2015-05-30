@@ -7,27 +7,21 @@
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/listName"
-        android:layout_width="200dip"
+        android:layout_weight="0.90"
         android:layout_height="fill_parent"
         android:padding="5dip"
-
-        android:textSize="16dip"
-        android:textStyle="bold" >
-    </TextView>
-
-    <Button android:id="@+id/button_send"
-        android:layout_width="60dip"
-        android:layout_height="wrap_content"
-        android:text="Edit"
         android:onClick="editList"
-    />
+        android:textSize="16dip"
+        android:textStyle="bold"
+        android:layout_width="wrap_content">
+    </TextView>
 
     <Button
         android:id="@+id/delete_btn"
-        android:layout_width="55dip"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/delete_32"
         android:onClick="delete"
-    />
+        android:layout_width="51dp"
+        android:textAlignment="center" />
 
 </LinearLayout>

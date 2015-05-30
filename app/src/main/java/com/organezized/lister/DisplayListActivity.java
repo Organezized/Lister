@@ -4,13 +4,10 @@ import android.app.Fragment;
 import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -43,7 +40,7 @@ public class DisplayListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_shopping_list_edit);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
@@ -77,7 +74,7 @@ public class DisplayListActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.activity_list,
+            View rootView = inflater.inflate(R.layout.activity_shopping_list_edit,
                     container, false);
             return rootView;
         }
@@ -123,7 +120,7 @@ public class DisplayListActivity extends ActionBarActivity {
     public void refreshList() {
         // set the adapter using the instance above and refresh activity contents
         ListView listItemsView = (ListView) findViewById(R.id.listItems);
-        ArrayAdapter adapters = new ArrayAdapter<String>(this, R.layout.list_item,R.id.listItemName, shoppingListItems);
+        ArrayAdapter adapters = new ArrayAdapter<String>(this, R.layout.shopping_list_item,R.id.listItemName, shoppingListItems);
         listItemsView.setAdapter(adapters);
         adapters.notifyDataSetChanged();
     }

@@ -2,28 +2,24 @@ package com.organezized.lister;
 
 import android.content.Context;
 import android.content.Intent;
-import android.renderscript.ScriptIntrinsicLUT;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
 import java.util.ArrayList;
 /**
  * Class for main page: create list main page
@@ -38,7 +34,7 @@ public class MainListActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_list);
+        setContentView(R.layout.activity_main);
 
         loadItems();
         refreshList();
@@ -87,7 +83,7 @@ public class MainListActivity extends ActionBarActivity {
         ListView lists = (ListView) findViewById(R.id.lists);
 
         // Create an array adapter (for some reason) ?? Not sure why yet.
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_list_item,R.id.listName, shoppingListNames);
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.shopping_list_title,R.id.listName, shoppingListNames);
         lists.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -117,7 +113,7 @@ public class MainListActivity extends ActionBarActivity {
     public void refreshList() {
         // set the adapter using the instance above and refresh activity contents
         ListView listItemsView = (ListView) findViewById(R.id.lists);
-        ArrayAdapter adapters = new ArrayAdapter<String>(this, R.layout.activity_list_item,R.id.listName, shoppingListNames);
+        ArrayAdapter adapters = new ArrayAdapter<String>(this, R.layout.shopping_list_title,R.id.listName, shoppingListNames);
         listItemsView.setAdapter(adapters);
         adapters.notifyDataSetChanged();
     }

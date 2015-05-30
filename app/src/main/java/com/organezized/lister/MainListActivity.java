@@ -30,8 +30,8 @@ import java.util.ArrayList;
  */
 public class MainListActivity extends ActionBarActivity {
 
-    // Array stores the items after loading from: loadItems()
-    ArrayList<String> loadedItems = new ArrayList<>();
+    // Array stores the shopping list names
+    ArrayList<String> shoppingListNames = new ArrayList<>();
 
 
     // load list items and populate list name page
@@ -81,13 +81,13 @@ public class MainListActivity extends ActionBarActivity {
         String listName = editText.getText().toString();
 
         // Add the new List.
-        loadedItems.add(listName);
+        shoppingListNames.add(listName);
 
         // Make a reference to the Lists.
         ListView lists = (ListView) findViewById(R.id.lists);
 
         // Create an array adapter (for some reason) ?? Not sure why yet.
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_list_item,R.id.listName, loadedItems);
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_list_item,R.id.listName, shoppingListNames);
         lists.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -97,7 +97,7 @@ public class MainListActivity extends ActionBarActivity {
 
 
     // On click handler(when edit is clicked)
-    // pass list name to the page of where you edit the list
+    // pass list name to the page: where you edit the list
     public void editList(View view) {
         // get parent of button
         LinearLayout buttonParent = (LinearLayout) view.getParent();
@@ -108,6 +108,8 @@ public class MainListActivity extends ActionBarActivity {
         Intent intent = new Intent(this, DisplayListActivity.class);
         intent.putExtra("LIST_NAME", listName);
         startActivity(intent);
+
+        refreshList();
     }
 
 
@@ -115,13 +117,13 @@ public class MainListActivity extends ActionBarActivity {
     public void refreshList() {
         // set the adapter using the instance above and refresh activity contents
         ListView listItemsView = (ListView) findViewById(R.id.lists);
-        ArrayAdapter adapters = new ArrayAdapter<String>(this, R.layout.activity_list_item,R.id.listName, loadedItems);
+        ArrayAdapter adapters = new ArrayAdapter<String>(this, R.layout.activity_list_item,R.id.listName, shoppingListNames);
         listItemsView.setAdapter(adapters);
         adapters.notifyDataSetChanged();
     }
 
 
-    // creating the file for the list
+    // creating the file for the list names
     public void saveItems() {
 
         String FILE_NAME = "list_names";
@@ -133,7 +135,7 @@ public class MainListActivity extends ActionBarActivity {
             FileOutputStream fos = openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
 
             try {
-                for (String item : loadedItems) {
+                for (String item : shoppingListNames) {
                     fos.write(item.getBytes());
                     fos.write("\n".getBytes());
 
@@ -151,7 +153,7 @@ public class MainListActivity extends ActionBarActivity {
     }
 
 
-    // loading saved items
+    // loading saved items: list names
     public void loadItems() {
         try {
             FileInputStream fis = openFileInput("list_names");
@@ -161,7 +163,7 @@ public class MainListActivity extends ActionBarActivity {
             String line;
 
             while ((line = buffer.readLine()) != null) {
-                loadedItems.add(line);
+                shoppingListNames.add(line);
             }
         }
         catch (Exception e) {
@@ -176,9 +178,10 @@ public class MainListActivity extends ActionBarActivity {
         ListView listNames = (ListView) findViewById(R.id.lists);
         int indexNo = listNames.getPositionForView(v);
 
-        loadedItems.remove(indexNo);
+        shoppingListNames.remove(indexNo);
 
         refreshList();
+        saveItems();
     }
 
 }  // end of class

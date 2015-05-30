@@ -35,12 +35,10 @@ import java.util.ArrayList;
 public class DisplayListActivity extends ActionBarActivity {
 
     // Stores the list names
-    ArrayList<String> listItems = new ArrayList<>();
-
-    ArrayList<String> listContents = new ArrayList<>();
-
+    ArrayList<String> shoppingListItems = new ArrayList<>();
 
     // Creates the view that is seen when passed to the new window
+    // For editing list contents
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +53,6 @@ public class DisplayListActivity extends ActionBarActivity {
         listNameField.setText(listName);
 
         loadItems();
-        for (String item: listItems) {
-            System.out.println(item);
-        }
         refreshList();
     }
 
@@ -98,16 +93,17 @@ public class DisplayListActivity extends ActionBarActivity {
         String listItemName = listItemNameField.getText().toString();
 
         // Add the list items to array
-        listItems.add(listItemName);
+        shoppingListItems.add(listItemName);
 
         System.out.println("List item method");
-        for (String item: listItems) {
+        for (String item: shoppingListItems) {
 
-            System.out.println(item);
+            System.out.println("Item: " + item);
         }
 
-        saveItems();
         refreshList();
+        saveItems();
+
     }
 
 
@@ -116,9 +112,10 @@ public class DisplayListActivity extends ActionBarActivity {
         ListView listItemsView = (ListView) findViewById(R.id.listItems);
         int indexNo = listItemsView.getPositionForView(view);
 
-        listItems.remove(indexNo);
+        shoppingListItems.remove(indexNo);
 
         refreshList();
+        saveItems();
     }
 
 
@@ -126,23 +123,27 @@ public class DisplayListActivity extends ActionBarActivity {
     public void refreshList() {
         // set the adapter using the instance above and refresh activity contents
         ListView listItemsView = (ListView) findViewById(R.id.listItems);
-        ArrayAdapter adapters = new ArrayAdapter<String>(this, R.layout.list_item,R.id.listItemName, listItems);
+        ArrayAdapter adapters = new ArrayAdapter<String>(this, R.layout.list_item,R.id.listItemName, shoppingListItems);
         listItemsView.setAdapter(adapters);
         adapters.notifyDataSetChanged();
     }
 
 
     // creating the file for the list
+    // list contents
     public void saveItems() {
 
-        String FILE_NAME = "list_content";
+        // get the name of list and put it in the file_name
+        Intent intent = getIntent();
+        String FILE_NAME = intent.getStringExtra("LIST_NAME");
+
 
         try {
 
             FileOutputStream fos = openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
 
             try {
-                for (String item : listItems) {
+                for (String item : shoppingListItems) {
                     fos.write(item.getBytes());
                     fos.write("\n".getBytes());
 
@@ -162,15 +163,18 @@ public class DisplayListActivity extends ActionBarActivity {
 
     // loading saved items
     public void loadItems() {
+        Intent intent = getIntent();
+        String FILE_NAME = intent.getStringExtra("LIST_NAME");
+
         try {
-            FileInputStream fis = openFileInput("list_names");
+            FileInputStream fis = openFileInput(FILE_NAME);
             InputStreamReader inputStream = new InputStreamReader(fis);
             BufferedReader buffer = new BufferedReader(inputStream);
 
             String line;
 
             while ((line = buffer.readLine()) != null) {
-                listItems.add(line);
+                shoppingListItems.add(line);
             }
         }
         catch (Exception e) {

@@ -96,8 +96,7 @@ public class MainListActivity extends ActionBarActivity {
     }
 
 
-    // On click handler(when edit is clicked)
-    // pass list name to the page: where you edit the list
+    // runs when editing a list name
     public void editList(View view) {
         // get parent of button
         LinearLayout buttonParent = (LinearLayout) view.getParent();
@@ -117,6 +116,7 @@ public class MainListActivity extends ActionBarActivity {
     public void refreshList() {
         // set the adapter using the instance above and refresh activity contents
         ListView listItemsView = (ListView) findViewById(R.id.lists);
+
         ArrayAdapter adapters = new ArrayAdapter<String>(this, R.layout.activity_list_item,R.id.listName, shoppingListNames);
         listItemsView.setAdapter(adapters);
         adapters.notifyDataSetChanged();

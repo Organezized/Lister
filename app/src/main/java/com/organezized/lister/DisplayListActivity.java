@@ -83,7 +83,7 @@ public class DisplayListActivity extends ActionBarActivity {
         }
     }
 
-
+    // ! change this for change list contents ***
     // This method adds items to the actual list.
     // This is the list contents.
     public void addListItemName(View view) {

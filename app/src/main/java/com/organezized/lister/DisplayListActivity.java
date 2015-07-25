@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -65,7 +66,6 @@ public class DisplayListActivity extends ActionBarActivity {
     }
 
 
-    // Don't know what this does?
     // A placeholder fragment containing a simple view.
     public static class PlaceholderFragment extends Fragment {
 
@@ -100,6 +100,10 @@ public class DisplayListActivity extends ActionBarActivity {
 
         refreshList();
         saveItems();
+
+        listItemNameField.setText("");
+        InputMethodManager clearsoft = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        clearsoft.hideSoftInputFromWindow(listItemNameField.getWindowToken(),0);
 
     }
 

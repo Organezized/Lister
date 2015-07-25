@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -89,6 +92,11 @@ public class MainListActivity extends ActionBarActivity {
 
         // Save the list names to file
         saveItems();
+
+        editText.setText("");
+        InputMethodManager clearsoft = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        clearsoft.hideSoftInputFromWindow(editText.getWindowToken(),0);
+
     }
 
 
@@ -108,13 +116,12 @@ public class MainListActivity extends ActionBarActivity {
     }
 
 
+
+
     // refresh list after making changes
     public void refreshList() {
         // set the adapter using the instance above and refresh activity contents
         ListView listItemsView = (ListView) findViewById(R.id.lists);
-
-
-     
 
         ArrayAdapter adapters = new ArrayAdapter<String>(this, R.layout.shopping_list_title,R.id.listName, shoppingListNames);
        

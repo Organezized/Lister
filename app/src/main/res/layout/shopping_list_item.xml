@@ -4,7 +4,7 @@ android:orientation="horizontal" android:layout_width="fill_parent"
 android:layout_height="fill_parent"
     android:weightSum="1">
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/listItemName"
     android:layout_width="0dp"
     android:layout_height="fill_parent"
@@ -12,8 +12,8 @@ android:layout_height="fill_parent"
     android:padding="10dip"
     android:textSize="16dip"
     android:textStyle="bold"
-    >
-</TextView>
+    android:editable="true">
+</EditText>
 
 <Button android:id="@+id/button_send"
     android:layout_height="wrap_content"
